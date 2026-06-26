@@ -1,41 +1,42 @@
 <?php
 /**
- * Kurulum Sihirbazı
+ * Kurulum Sihirbazı - Ahost One
  */
-define('INSTALLING', true);
-$step = $_GET['step'] ?? 1;
-$errors = [];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+define('SITE_NAME', 'Ahost One');
+
+function base_url($path = '') {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $dir = dirname($_SERVER['SCRIPT_NAME'] ?? '');
+    return $protocol . $host . ($dir !== '/' ? $dir : '') . '/' . ltrim($path, '/');
+}
+
+$step = isset($_GET['step']) ? (int)$_GET['step'] : 1;
 $success = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($step == 2) {
-        // Sistem kontrolü
-        $requirements = [
-            'PHP Versiyonu' => version_compare(PHP_VERSION, '8.0', '>='),
-            'PDO Extension' => extension_loaded('pdo'),
-            'JSON Extension' => extension_loaded('json'),
-            'GD Extension' => extension_loaded('gd'),
-        ];
-        $_SESSION['install_requirements'] = $requirements;
-        $step = 3;
-    } elseif ($step == 3) {
-        // Veritabanı ayarları
+    if ($step == 1) {
+        $step = 2;
+    } elseif ($step == 2) {
         $_SESSION['install_db'] = [
             'host' => $_POST['db_host'] ?? 'localhost',
             'name' => $_POST['db_name'] ?? '',
             'user' => $_POST['db_user'] ?? '',
             'pass' => $_POST['db_pass'] ?? '',
         ];
-        $step = 4;
-    } elseif ($step == 4) {
-        // Admin hesabı
+        $step = 3;
+    } elseif ($step == 3) {
         $_SESSION['install_admin'] = [
             'name' => $_POST['admin_name'] ?? '',
             'email' => $_POST['admin_email'] ?? '',
-            'password' => $_POST['admin_password'] ?? '',
+            'password' => password_hash($_POST['admin_password'] ?? '', PASSWORD_DEFAULT),
         ];
-        $step = 5;
-    } elseif ($step == 5) {
+        $step = 4;
+    } elseif ($step == 4) {
         $success = true;
     }
 }
@@ -45,80 +46,204 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kurulum - <?= SITE_NAME ?? 'Ahost One' ?></title>
+    <title>Kurulum - <?= SITE_NAME ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .install-card { background: #1e293b; border-radius: 16px; padding: 40px; max-width: 600px; width: 100%; }
-        .install-header { text-align: center; margin-bottom: 32px; }
-        .install-header h1 { font-size: 28px; margin-bottom: 8px; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #e2e8f0; 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
+        .install-card { 
+            background: #1e293b; 
+            border-radius: 20px; 
+            padding: 48px; 
+            max-width: 600px; 
+            width: 100%; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .install-header { text-align: center; margin-bottom: 40px; }
+        .install-logo { 
+            width: 80px; 
+            height: 80px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 20px;
+        }
+        .install-header h1 { font-size: 28px; margin-bottom: 8px; color: white; }
         .install-header p { color: #94a3b8; }
-        .steps { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
-        .step { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; background: #334155; color: #94a3b8; }
-        .step.active { background: #667eea; color: white; }
+        
+        .steps { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; }
+        .step { 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 600; 
+            background: #334155; 
+            color: #94a3b8;
+            transition: all 0.3s;
+        }
+        .step.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         .step.completed { background: #10b981; color: white; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
-        .form-group input { width: 100%; padding: 12px 16px; background: #0f172a; border: 2px solid #334155; border-radius: 8px; color: white; font-size: 16px; }
+        .step-label {
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+            margin-top: 8px;
+        }
+        
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 500; color: #e2e8f0; }
+        .form-group input { 
+            width: 100%; 
+            padding: 14px 18px; 
+            background: #0f172a; 
+            border: 2px solid #334155; 
+            border-radius: 12px; 
+            color: white; 
+            font-size: 16px;
+            transition: all 0.2s;
+        }
         .form-group input:focus { outline: none; border-color: #667eea; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; font-size: 16px; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; text-decoration: none; }
-        .btn-primary { background: #667eea; color: white; }
-        .btn-primary:hover { background: #5a67d8; transform: translateY(-2px); }
-        .btn-block { width: 100%; }
-        .success { text-align: center; padding: 40px; }
-        .success i { font-size: 64px; color: #10b981; margin-bottom: 16px; }
-        .check-list { background: #0f172a; border-radius: 8px; padding: 20px; margin-bottom: 24px; }
-        .check-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
-        .check-item i { font-size: 18px; }
+        .form-group input::placeholder { color: #64748b; }
+        
+        .btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            padding: 16px 32px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            border-radius: 12px; 
+            border: none; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            width: 100%;
+        }
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .check-list { background: #0f172a; border-radius: 16px; padding: 24px; margin-bottom: 24px; }
+        .check-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+            padding: 12px 0;
+            font-size: 15px;
+        }
+        .check-item i { font-size: 20px; }
         .check-item.success i { color: #10b981; }
         .check-item.error i { color: #ef4444; }
+        
+        .success { text-align: center; padding: 40px 0; }
+        .success-icon { 
+            width: 100px; 
+            height: 100px; 
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .success-icon i { font-size: 48px; color: #10b981; }
+        .success h2 { font-size: 28px; margin-bottom: 16px; color: white; }
+        .success p { color: #94a3b8; margin-bottom: 24px; }
+        
+        h3 { color: white; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 <div class="install-card">
     <div class="install-header">
-        <h1><i class="fas fa-rocket"></i> <?= SITE_NAME ?? 'Ahost One' ?> Kurulum</h1>
-        <p>Hosting yönetim sistemi kurulum sihirbazı</p>
+        <div class="install-logo">A</div>
+        <h1><?= SITE_NAME ?></h1>
+        <p>Kurulum Sihirbazı</p>
     </div>
     
     <div class="steps">
-        <?php for($i=1;$i<=5;$i++): ?>
-            <div class="step <?= $i<$step?'completed':($i==$step?'active':'') ?>"><?= $i<$step?'✓':$i ?></div>
-        <?php endfor; ?>
+        <div style="text-align:center;">
+            <div class="step <?= $step > 1 ? 'completed' : ($step == 1 ? 'active' : '') ?>"><?= $step > 1 ? '✓' : '1' ?></div>
+            <div class="step-label">Gereksinimler</div>
+        </div>
+        <div style="text-align:center;">
+            <div class="step <?= $step > 2 ? 'completed' : ($step == 2 ? 'active' : '') ?>"><?= $step > 2 ? '✓' : '2' ?></div>
+            <div class="step-label">Veritabanı</div>
+        </div>
+        <div style="text-align:center;">
+            <div class="step <?= $step > 3 ? 'completed' : ($step == 3 ? 'active' : '') ?>"><?= $step > 3 ? '✓' : '3' ?></div>
+            <div class="step-label">Admin</div>
+        </div>
+        <div style="text-align:center;">
+            <div class="step <?= $step > 4 ? 'completed' : ($step == 4 ? 'active' : '') ?>"><?= $step > 4 ? '✓' : '4' ?></div>
+            <div class="step-label">Tamamla</div>
+        </div>
     </div>
     
     <?php if ($success): ?>
         <div class="success">
-            <i class="fas fa-check-circle"></i>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
             <h2>Kurulum Tamamlandı!</h2>
-            <p style="color:#94a3b8;margin:16px 0;">Sisteminiz hazır. Giriş yapabilirsiniz.</p>
-            <a href="index.php" class="btn btn-primary">Siteye Git</a>
+            <p>Sisteminiz hazır. Şimdi giriş yapabilirsiniz.</p>
+            <a href="index.php" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> Siteye Git
+            </a>
         </div>
+    
     <?php elseif ($step == 1): ?>
+        <h3>Sistem Gereksinimleri</h3>
         <div class="check-list">
-            <div class="check-item <?= version_compare(PHP_VERSION, '8.0', '>=')?'success':'error' ?>">
-                <i class="fas fa-<?= version_compare(PHP_VERSION, '8.0', '>=')?'check-circle':'times-circle' ?>"></i>
-                PHP Versiyonu: <?= PHP_VERSION ?> (Gerekli: 8.0+)
+            <div class="check-item <?= version_compare(PHP_VERSION, '7.4', '>=') ? 'success' : 'error' ?>">
+                <i class="fas fa-<?= version_compare(PHP_VERSION, '7.4', '>=') ? 'check-circle' : 'times-circle' ?>"></i>
+                PHP Versiyonu: <?= PHP_VERSION ?> (Gerekli: 7.4+)
             </div>
-            <div class="check-item <?= extension_loaded('pdo')?'success':'error' ?>">
-                <i class="fas fa-<?= extension_loaded('pdo')?'check-circle':'times-circle' ?>"></i>
-                PDO Extension: <?= extension_loaded('pdo')?'Aktif':'Pasif' ?>
+            <div class="check-item <?= extension_loaded('pdo') ? 'success' : 'error' ?>">
+                <i class="fas fa-<?= extension_loaded('pdo') ? 'check-circle' : 'times-circle' ?>"></i>
+                PDO Extension: <?= extension_loaded('pdo') ? 'Aktif' : 'Pasif' ?>
             </div>
-            <div class="check-item <?= extension_loaded('json')?'success':'error' ?>">
-                <i class="fas fa-<?= extension_loaded('json')?'check-circle':'times-circle' ?>"></i>
-                JSON Extension: <?= extension_loaded('json')?'Aktif':'Pasif' ?>
+            <div class="check-item <?= extension_loaded('json') ? 'success' : 'error' ?>">
+                <i class="fas fa-<?= extension_loaded('json') ? 'check-circle' : 'times-circle' ?>"></i>
+                JSON Extension: <?= extension_loaded('json') ? 'Aktif' : 'Pasif' ?>
             </div>
-            <div class="check-item <?= extension_loaded('gd')?'success':'error' ?>">
-                <i class="fas fa-<?= extension_loaded('gd')?'check-circle':'times-circle' ?>"></i>
-                GD Extension: <?= extension_loaded('gd')?'Aktif':'Pasif' ?>
+            <div class="check-item <?= extension_loaded('mbstring') ? 'success' : 'error' ?>">
+                <i class="fas fa-<?= extension_loaded('mbstring') ? 'check-circle' : 'times-circle' ?>"></i>
+                MBString Extension: <?= extension_loaded('mbstring') ? 'Aktif' : 'Pasif' ?>
             </div>
         </div>
         <form method="POST">
-            <button type="submit" class="btn btn-primary btn-block">Devam Et <i class="fas fa-arrow-right"></i></button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i> Devam Et
+            </button>
         </form>
-    <?php elseif ($step == 3): ?>
-        <h3 style="margin-bottom:24px;">Veritabanı Ayarları</h3>
+    
+    <?php elseif ($step == 2): ?>
+        <h3>Veritabanı Ayarları</h3>
         <form method="POST">
             <div class="form-group">
                 <label>Host</label>
@@ -126,35 +251,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label>Veritabanı Adı</label>
-                <input type="text" name="db_name" required>
+                <input type="text" name="db_name" placeholder="ahost_one" required>
             </div>
             <div class="form-group">
-                <label>Kullanıcı</label>
-                <input type="text" name="db_user" required>
+                <label>Kullanıcı Adı</label>
+                <input type="text" name="db_user" placeholder="root" required>
             </div>
             <div class="form-group">
                 <label>Şifre</label>
-                <input type="password" name="db_pass">
+                <input type="password" name="db_pass" placeholder="••••••••">
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Devam Et <i class="fas fa-arrow-right"></i></button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-arrow-right"></i> Devam Et
+            </button>
         </form>
-    <?php elseif ($step == 4): ?>
-        <h3 style="margin-bottom:24px;">Admin Hesabı</h3>
+    
+    <?php elseif ($step == 3): ?>
+        <h3>Admin Hesabı</h3>
         <form method="POST">
             <div class="form-group">
                 <label>Ad Soyad</label>
-                <input type="text" name="admin_name" required>
+                <input type="text" name="admin_name" placeholder="Admin User" required>
             </div>
             <div class="form-group">
                 <label>E-posta</label>
-                <input type="email" name="admin_email" required>
+                <input type="email" name="admin_email" placeholder="admin@example.com" required>
             </div>
             <div class="form-group">
                 <label>Şifre</label>
-                <input type="password" name="admin_password" required minlength="8">
+                <input type="password" name="admin_password" placeholder="••••••••" required minlength="8">
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Kurulumu Tamamla <i class="fas fa-check"></i></button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i> Kurulumu Tamamla
+            </button>
         </form>
+    
+    <?php elseif ($step == 4): ?>
+        <div class="success">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Hazırlık Tamamlandı!</h2>
+            <p>Son adıma geçmek için butona tıklayın.</p>
+            <form method="POST">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Kurulumu Başlat
+                </button>
+            </form>
+        </div>
     <?php endif; ?>
 </div>
 </body>
