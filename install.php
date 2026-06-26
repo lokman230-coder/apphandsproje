@@ -184,7 +184,7 @@ if (\$_SERVER['REQUEST_METHOD']==='POST' && \$page==='register') {
 if (\$page==='logout') { session_destroy(); redirect(''); }
 
 switch (\$page) {
-    case '': \$t='Ana Sayfa'; \$c='home'; require __DIR__.'/app/Views/site/home.php'; break;
+    case '': \$t='Ana Sayfa'; require __DIR__.'/app/Views/site/home.php'; break;
     case 'hosting': \$t='Hosting'; require __DIR__.'/app/Views/site/hosting.php'; break;
     case 'vps': \$t='VPS'; require __DIR__.'/app/Views/site/vps.php'; break;
     case 'domain': \$t='Domain'; require __DIR__.'/app/Views/site/domain.php'; break;
@@ -204,16 +204,6 @@ switch (\$page) {
         \$t='Kayit';
         if (!isLoggedIn()) require __DIR__.'/app/Views/auth/register.php';
         else redirect('customer');
-        break;
-    case 'admin':
-        if (!isAdmin()) redirect('login');
-        \$ap = \$action ?:\$p='dashboard';
-        \$pages=['dashboard'=>'admin/dashboard','customers'=>'admin/customers','orders'=>'admin/orders','products'=>'admin/products','domains'=>'admin/domains','hosting'=>'admin/hosting-server/index','support'=>'admin/support','invoices'=>'admin/invoices','settings'=>'admin/settings','ai-center'=>'admin/ai-center','modules'=>'admin/modules','announcements'=>'admin/announcements','health'=>'admin/health-center/index','backup'=>'admin/backup-center/index','help'=>'admin/help-center/index'];
-        require __DIR__.'/app/Views/'.(\$pages[\$ap]??'admin/dashboard').'.php';
-        break;
-    case 'admin/login':
-        \$t='Admin Giris';
-        require __DIR__.'/app/Views/admin/login.php';
         break;
     case 'customer':
         if (!isLoggedIn()) redirect('login');

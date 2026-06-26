@@ -1,5 +1,10 @@
 RewriteEngine On
-RewriteBase /ssdhost/nexus.ssdhostal.com/
+
+# Admin klasoru - oldur
+RewriteCond %{REQUEST_URI} ^/admin/
+RewriteRule ^admin/(.*)$ admin/index.php?route=$1 [QSA,L]
+
+# Site - index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
