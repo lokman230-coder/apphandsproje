@@ -8,7 +8,10 @@
 // KONFİGÜRASYON
 // ============================================
 define('SITE_NAME', 'Ahost One');
-define('SITE_URL', 'http://localhost');
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+$basePath = dirname($_SERVER['SCRIPT_NAME']);
+define('SITE_URL', $protocol . $host . ($basePath !== '/' ? $basePath : ''));
 define('SITE_EMAIL', 'info@ahostone.com');
 
 // Veritabanı
@@ -147,7 +150,7 @@ if (!isset($_SESSION['initialized'])) {
 // ============================================
 // ROUTER
 // ============================================
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = isset($_GET['route']) ? $_GET['route'] : (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '');
 $uri = trim($uri, '/');
 $segments = $uri ? explode('/', $uri) : [];
 $page = $segments[0] ?? '';
