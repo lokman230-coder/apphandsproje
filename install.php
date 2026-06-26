@@ -2,17 +2,20 @@
 /**
  * Kurulum Sihirbazi - Ahost One
  */
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+@session_start();
 
 $SITE_NAME = 'Ahost One';
 $step = isset($_GET['step']) ? (int)$_GET['step'] : 1;
 $success = false;
+$error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($step == 1) { $step = 2; }
-    elseif ($step == 2) {
+    $postStep = isset($_POST['go_step']) ? (int)$_POST['go_step'] : $step + 1;
+    
+    if ($postStep == 2) { 
+        $step = 2; 
+    }
+    elseif ($postStep == 3) {
         $_SESSION['install_db'] = [
             'host' => $_POST['db_host'] ?? 'localhost',
             'name' => $_POST['db_name'] ?? '',
@@ -21,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
         $step = 3;
     }
-    elseif ($step == 3) {
+    elseif ($postStep == 4) {
         $_SESSION['install_admin'] = [
             'name' => $_POST['admin_name'] ?? '',
             'email' => $_POST['admin_email'] ?? '',
@@ -29,7 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
         $step = 4;
     }
-    elseif ($step == 4) { $success = true; }
+    elseif ($postStep == 5) { 
+        $success = true; 
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -96,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="step-label">Admin</div>
         </div>
         <div style="text-align:center;">
-            <div class="step <?php echo $step > 4 ? 'completed' : ($step == 4 ? 'active' : ''); ?>"><?php echo $step > 4 ? '<i class="fas fa-check"></i>' : '4'; ?></div>
+            <div class="step <?php echo $step >= 4 ? 'completed' : ''; ?>"><?php echo $step >= 4 ? '<i class="fas fa-check"></i>' : '4'; ?></div>
             <div class="step-label">Tamamla</div>
         </div>
     </div>
@@ -129,11 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
         <form method="POST">
+            <input type="hidden" name="go_step" value="2">
             <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Devam Et</button>
         </form>
     <?php elseif ($step == 2): ?>
         <h3>Veritabani Ayarlari</h3>
         <form method="POST">
+            <input type="hidden" name="go_step" value="3">
             <div class="form-group">
                 <label>Host</label>
                 <input type="text" name="db_host" value="localhost" required>
@@ -155,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php elseif ($step == 3): ?>
         <h3>Admin Hesabi</h3>
         <form method="POST">
+            <input type="hidden" name="go_step" value="4">
             <div class="form-group">
                 <label>Ad Soyad</label>
                 <input type="text" name="admin_name" placeholder="Admin User" required>
@@ -175,6 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2>Hazirlik Tamamlandi!</h2>
             <p>Son adima gecmek icin butona tiklayin.</p>
             <form method="POST">
+                <input type="hidden" name="go_step" value="5">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-rocket"></i> Kurulumu Baslat</button>
             </form>
         </div>
