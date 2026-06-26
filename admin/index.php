@@ -12,15 +12,34 @@ define('SITE_NAME', 'Ahost One');
 $basePath = dirname(__DIR__);
 define('BASE_PATH', $basePath);
 
-// Config
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'ahostone');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+// Config - parent directory'den al
+$configFile = BASE_PATH . '/index.php';
+if (file_exists($configFile)) {
+    $config = file_get_contents($configFile);
+    if (preg_match('/define\(\'DB_HOST\',\s*[\'"]?([^\'"]+)[\'"]?\)/', $config, $m)) define('DB_HOST', $m[1]);
+    else define('DB_HOST', 'localhost');
+    if (preg_match('/define\(\'DB_NAME\',\s*[\'"]?([^\'"]+)[\'"]?\)/', $config, $m)) define('DB_NAME', $m[1]);
+    else define('DB_NAME', 'ahostone');
+    if (preg_match('/define\(\'DB_USER\',\s*[\'"]?([^\'"]+)[\'"]?\)/', $config, $m)) define('DB_USER', $m[1]);
+    else define('DB_USER', 'root');
+    if (preg_match('/define\(\'DB_PASS\',\s*[\'"]?([^\'"]*)[\'"]?\)/', $config, $m)) define('DB_PASS', $m[1]);
+    else define('DB_PASS', '');
+} else {
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'ahostone');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+}
 
 function db() {
     static $pdo = null;
-    if (!$pdo) $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8mb4', DB_USER, DB_PASS, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+    if ($pdo === null) {
+        try {
+            $pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8mb4', DB_USER, DB_PASS, [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+        } catch (PDOException $e) {
+            die('DB Error: ' . $e->getMessage());
+        }
+    }
     return $pdo;
 }
 function redirect($u) { header('Location:'.$u); exit; }
