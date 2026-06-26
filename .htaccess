@@ -1,18 +1,9 @@
 RewriteEngine On
-
-# Statik dosyaları doğrudan servis et
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# index.php'ye yönlendir
+RewriteBase /ssdhost/nexus.ssdhostal.com/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
 
-# PHP ayarları
 <IfModule mod_php7.c>
     php_value upload_max_filesize 128M
     php_value post_max_size 128M

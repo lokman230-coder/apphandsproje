@@ -10,8 +10,9 @@
 define('SITE_NAME', 'Ahost One');
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$basePath = dirname($_SERVER['SCRIPT_NAME']);
-define('SITE_URL', $protocol . $host . ($basePath !== '/' ? $basePath : ''));
+// Subfolder path - nexus.ssdhostal.com uses /ssdhost/nexus.ssdhostal.com/
+$basePath = '/ssdhost/nexus.ssdhostal.com';
+define('SITE_URL', $protocol . $host . $basePath);
 define('SITE_EMAIL', 'info@ahostone.com');
 
 // Veritabanı
