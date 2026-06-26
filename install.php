@@ -122,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // index.php guncelle
             $config = "<?php
+@session_start();
 define('SITE_NAME', 'Ahost One');
 \$protocol = (!empty(\$_SERVER['HTTPS']) && \$_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 \$host = \$_SERVER['HTTP_HOST'] ?? 'localhost';
@@ -152,7 +153,6 @@ function isAdmin() { return isset(\$_SESSION['user_type']) && \$_SESSION['user_t
 function setFlash(\$t, \$m) { \$_SESSION['flash'][\$t]=\$m; }
 function getFlash() { \$f=\$_SESSION['flash']??[]; unset(\$_SESSION['flash']); return \$f; }
 
-@session_start();
 date_default_timezone_set('Europe/Istanbul');
 
 \$uri = \$_GET['route'] ?? (parse_url(\$_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '');
@@ -227,8 +227,6 @@ switch (\$page) {
             file_put_contents(__DIR__ . '/index.php', $config);
             
             $success = true;
-            $_SESSION['admin_email'] = $adminEmail;
-            $_SESSION['admin_pass'] = $adminPass;
             
         } catch (Exception $e) {
             $error = $e->getMessage();
@@ -294,8 +292,8 @@ switch (\$page) {
         <p>Veritabani olusturuldu ve index.php guncellendi.</p>
         <div class="info">
             <p><strong>Admin Giris:</strong></p>
-            <p>E-posta: <?= htmlspecialchars($_SESSION['admin_email'] ?? '') ?></p>
-            <p>Sifre: <?= htmlspecialchars($_SESSION['admin_pass'] ?? '') ?></p>
+            <p>E-posta: <?= htmlspecialchars($_POST['admin_email'] ?? '') ?></p>
+            <p>Sifre: <?= htmlspecialchars($_POST['admin_password'] ?? '') ?></p>
         </div>
         <a href="index.php" class="btn">Siteye Git</a>
     </div>
