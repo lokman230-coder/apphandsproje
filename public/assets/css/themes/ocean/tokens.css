@@ -1,0 +1,373 @@
+/**
+ * Ahost One - Ocean Theme Tokens
+ * Mavi/Yeşil - Temiz ve Güvenilir
+ * Benzersiz: Wave pattern, bubble effects, deep ocean vibes
+ */
+
+[data-theme="ocean"] {
+    /* Primary - Clean Blue/Green */
+    --primary-50: #ecfeff;
+    --primary-100: #cffafe;
+    --primary-200: #a5f3fc;
+    --primary-300: #67e8f9;
+    --primary-400: #22d3ee;
+    --primary-500: #06b6d4;
+    --primary-600: #0891b2;
+    --primary-700: #0e7490;
+    --primary-800: #155e75;
+    --primary-900: #164e63;
+    
+    /* Gradient */
+    --gradient-primary: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #22d3ee 100%);
+    --gradient-ocean: linear-gradient(180deg, #0f172a 0%, #0c4a6e 50%, #164e63 100%);
+    --gradient-sea: linear-gradient(135deg, #0ea5e9 0%, #10b981 50%, #06b6d4 100%);
+    --gradient-teal: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #22d3ee 100%);
+    
+    /* Accent Colors */
+    --accent-cyan: #22d3ee;
+    --accent-teal: #14b8a6;
+    --accent-emerald: #10b981;
+    --accent-blue: #3b82f6;
+    
+    /* Backgrounds */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-tertiary: #e2e8f0;
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --bg-hover: rgba(8, 145, 178, 0.08);
+    
+    /* Text */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    
+    /* Borders */
+    --border-subtle: rgba(8, 145, 178, 0.1);
+    --border-strong: rgba(8, 145, 178, 0.2);
+    --border-hover: rgba(8, 145, 178, 0.4);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow: 0 2px 4px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.1);
+    --shadow-lg: 0 10px 15px rgba(15, 23, 42, 0.1);
+    --shadow-xl: 0 20px 25px rgba(15, 23, 42, 0.15);
+    --shadow-2xl: 0 25px 50px rgba(15, 23, 42, 0.2);
+    --shadow-glow: 0 0 40px rgba(8, 145, 178, 0.2);
+    --shadow-ocean: 0 10px 40px rgba(8, 145, 178, 0.15);
+    
+    /* Header */
+    --header-height: 72px;
+}
+
+/* Ocean Body - Light Theme */
+[data-theme="ocean"] body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Ocean Scrollbar */
+[data-theme="ocean"] ::-webkit-scrollbar {
+    width: 8px;
+}
+
+[data-theme="ocean"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+[data-theme="ocean"] ::-webkit-scrollbar-thumb {
+    background: var(--primary-500);
+    border-radius: 4px;
+}
+
+[data-theme="ocean"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-600);
+}
+
+/* ============================================
+   OCEAN - LOGO
+   ============================================ */
+[data-theme="ocean"] .logo-icon {
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.3);
+}
+
+[data-theme="ocean"] .logo-text {
+    color: var(--text-primary);
+}
+
+/* ============================================
+   OCEAN - NAVIGATION
+   ============================================ */
+[data-theme="ocean"] .site-header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="ocean"] .nav-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .nav-links a:hover,
+[data-theme="ocean"] .nav-links a.active {
+    color: var(--primary-600);
+}
+
+[data-theme="ocean"] .nav-links a::after {
+    background: var(--gradient-primary);
+}
+
+/* ============================================
+   OCEAN - BUTTONS
+   ============================================ */
+[data-theme="ocean"] .btn-primary {
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.3);
+}
+
+[data-theme="ocean"] .btn-primary:hover {
+    box-shadow: 0 8px 30px rgba(8, 145, 178, 0.4);
+    transform: translateY(-2px);
+}
+
+[data-theme="ocean"] .btn-secondary {
+    background: white;
+    color: var(--primary-700);
+    border: 2px solid var(--primary-200);
+}
+
+[data-theme="ocean"] .btn-secondary:hover {
+    background: var(--primary-50);
+    border-color: var(--primary-400);
+}
+
+[data-theme="ocean"] .btn-ghost {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .btn-ghost:hover {
+    background: var(--bg-hover);
+    color: var(--primary-600);
+}
+
+/* ============================================
+   OCEAN - HERO
+   ============================================ */
+[data-theme="ocean"] .hero {
+    background: linear-gradient(180deg, white 0%, var(--bg-secondary) 100%);
+    position: relative;
+}
+
+[data-theme="ocean"] .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at 30% 20%, rgba(8, 145, 178, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+[data-theme="ocean"] .hero-title {
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-600) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-theme="ocean"] .hero-badge {
+    background: var(--primary-50);
+    color: var(--primary-700);
+    border: 1px solid var(--primary-200);
+}
+
+[data-theme="ocean"] .hero-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .hero-float {
+    background: white;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="ocean"] .hero-image {
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--primary-100);
+}
+
+/* ============================================
+   OCEAN - FEATURES
+   ============================================ */
+[data-theme="ocean"] .features {
+    background: white;
+    position: relative;
+}
+
+[data-theme="ocean"] .feature-card {
+    background: white;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="ocean"] .feature-card::before {
+    background: var(--gradient-primary);
+    border-radius: 24px 24px 0 0;
+}
+
+[data-theme="ocean"] .feature-card:hover {
+    border-color: var(--primary-200);
+    box-shadow: var(--shadow-ocean);
+    transform: translateY(-6px);
+}
+
+[data-theme="ocean"] .feature-icon {
+    background: linear-gradient(135deg, rgba(8, 145, 178, 0.1), rgba(16, 185, 129, 0.1));
+    color: var(--primary-600);
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.15);
+}
+
+[data-theme="ocean"] .feature-title {
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .feature-description {
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   OCEAN - PRICING
+   ============================================ */
+[data-theme="ocean"] .pricing {
+    background: var(--bg-secondary);
+}
+
+[data-theme="ocean"] .pricing-card {
+    background: white;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="ocean"] .pricing-card.popular {
+    border: 2px solid var(--primary-500);
+    box-shadow: var(--shadow-ocean);
+}
+
+[data-theme="ocean"] .pricing-badge {
+    background: var(--gradient-primary);
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.3);
+}
+
+[data-theme="ocean"] .pricing-name {
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .pricing-price {
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .pricing-features li {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .pricing-features li i {
+    color: var(--accent-emerald);
+}
+
+/* ============================================
+   OCEAN - FOOTER
+   ============================================ */
+[data-theme="ocean"] .site-footer {
+    background: linear-gradient(180deg, var(--bg-secondary) 0%, #e2e8f0 100%);
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .footer-brand p {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .footer-social a {
+    background: white;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .footer-social a:hover {
+    background: var(--primary-500);
+    border-color: var(--primary-500);
+    color: white;
+    box-shadow: 0 4px 15px rgba(8, 145, 178, 0.3);
+}
+
+[data-theme="ocean"] .footer-title {
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .footer-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="ocean"] .footer-links a:hover {
+    color: var(--primary-600);
+}
+
+/* ============================================
+   OCEAN - DOMAIN CHECKER
+   ============================================ */
+[data-theme="ocean"] .domain-checker {
+    background: white;
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="ocean"] .domain-form input {
+    background: white;
+    border: 2px solid var(--border-strong);
+    color: var(--text-primary);
+}
+
+[data-theme="ocean"] .domain-form input:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.1);
+}
+
+[data-theme="ocean"] .domain-result {
+    background: var(--bg-secondary);
+}
+
+[data-theme="ocean"] .domain-result.available {
+    border: 2px solid var(--accent-emerald);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+[data-theme="ocean"] .domain-result.available .domain-price {
+    color: var(--accent-emerald);
+    font-weight: 600;
+}
+
+/* ============================================
+   OCEAN - CTA
+   ============================================ */
+[data-theme="ocean"] .cta {
+    background: var(--gradient-primary);
+    position: relative;
+}
+
+[data-theme="ocean"] .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   OCEAN - SPECIAL EFFECTS
+   ============================================ */
+[data-theme="ocean"] .stat-value {
+    color: var(--primary-600);
+}

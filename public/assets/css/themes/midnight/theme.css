@@ -1,0 +1,404 @@
+/**
+ * Ahost One - Midnight Theme
+ * Karanlık Cyberpunk Tasarım
+ * Benzersiz: Neon vurgular, grid arka plan, glow efektleri
+ */
+
+/* ============================================
+   THEME TOKENS - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] {
+    /* Primary - Neon Mor */
+    --primary-50: #faf5ff;
+    --primary-100: #f3e8ff;
+    --primary-200: #e9d5ff;
+    --primary-300: #d8b4fe;
+    --primary-400: #c084fc;
+    --primary-500: #a855f7;
+    --primary-600: #9333ea;
+    --primary-700: #7e22ce;
+    --primary-800: #6b21a8;
+    --primary-900: #581c87;
+    
+    /* Neon Accent Colors */
+    --neon-cyan: #00f5ff;
+    --neon-pink: #ff00ff;
+    --neon-green: #39ff14;
+    --neon-orange: #ff6b00;
+    
+    /* Background - Deep Dark */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-tertiary: #1a1a25;
+    --bg-card: rgba(18, 18, 26, 0.8);
+    --bg-glass: rgba(18, 18, 26, 0.7);
+    
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-muted: #606070;
+    
+    /* Border */
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-glow: rgba(168, 85, 247, 0.3);
+}
+
+/* ============================================
+   BASE STYLES - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    background-image: 
+        radial-gradient(ellipse at top, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 50px 50px, 50px 50px;
+}
+
+/* Grid Pattern Animation */
+[data-theme="midnight"] {
+    --grid-color: rgba(168, 85, 247, 0.03);
+}
+
+/* ============================================
+   HEADER - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .site-header {
+    background: rgba(10, 10, 15, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .logo-icon {
+    background: linear-gradient(135deg, var(--primary-600), var(--neon-pink));
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    animation: neon-pulse 2s ease-in-out infinite;
+}
+
+[data-theme="midnight"] .logo-text {
+    color: white;
+}
+
+[data-theme="midnight"] .nav-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="midnight"] .nav-links a:hover,
+[data-theme="midnight"] .nav-links a.active {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+@keyframes neon-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+}
+
+/* ============================================
+   BUTTONS - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .btn-primary {
+    background: linear-gradient(135deg, var(--primary-600), var(--neon-pink));
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+[data-theme="midnight"] .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+}
+
+[data-theme="midnight"] .btn-primary:hover::before {
+    left: 100%;
+}
+
+[data-theme="midnight"] .btn-primary:hover {
+    box-shadow: 0 0 50px rgba(168, 85, 247, 0.6);
+    transform: translateY(-2px);
+}
+
+[data-theme="midnight"] .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid var(--primary-500);
+}
+
+[data-theme="midnight"] .btn-secondary:hover {
+    background: rgba(168, 85, 247, 0.1);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+}
+
+/* Glow Button */
+[data-theme="midnight"] .btn-glow {
+    background: transparent;
+    border: 2px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2), inset 0 0 20px rgba(0, 245, 255, 0.1);
+}
+
+[data-theme="midnight"] .btn-glow:hover {
+    background: var(--neon-cyan);
+    color: var(--bg-primary);
+    text-shadow: none;
+}
+
+/* ============================================
+   HERO - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .hero {
+    background: transparent;
+    position: relative;
+}
+
+[data-theme="midnight"] .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+[data-theme="midnight"] .hero-title {
+    background: linear-gradient(135deg, white 0%, var(--neon-cyan) 50%, var(--neon-pink) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: none;
+}
+
+[data-theme="midnight"] .hero-description {
+    color: var(--text-secondary);
+}
+
+[data-theme="midnight"] .hero-badge {
+    background: rgba(0, 245, 255, 0.1);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .hero-image {
+    border: 1px solid var(--primary-500);
+    box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+}
+
+[data-theme="midnight"] .hero-float {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glow);
+}
+
+/* ============================================
+   FEATURE CARDS - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .feature-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .feature-card::before {
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+    transform: scaleX(0);
+}
+
+[data-theme="midnight"] .feature-card:hover {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+[data-theme="midnight"] .feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+[data-theme="midnight"] .feature-icon {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(255, 0, 255, 0.2));
+    color: var(--neon-cyan);
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
+}
+
+[data-theme="midnight"] .feature-title {
+    color: white;
+}
+
+[data-theme="midnight"] .feature-description {
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   PRICING - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .pricing {
+    background: transparent;
+}
+
+[data-theme="midnight"] .pricing-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .pricing-card.popular {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .pricing-badge {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+}
+
+[data-theme="midnight"] .pricing-name {
+    color: white;
+}
+
+[data-theme="midnight"] .pricing-price {
+    color: white;
+}
+
+[data-theme="midnight"] .pricing-features li {
+    color: var(--text-secondary);
+}
+
+[data-theme="midnight"] .pricing-features li i {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+/* ============================================
+   FOOTER - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] .site-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .footer-brand p {
+    color: var(--text-muted);
+}
+
+[data-theme="midnight"] .footer-social a {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .footer-social a:hover {
+    background: var(--primary-600);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .footer-links a {
+    color: var(--text-muted);
+}
+
+[data-theme="midnight"] .footer-links a:hover {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* ============================================
+   SPECIAL ELEMENTS - MIDNIGHT
+   ============================================ */
+
+/* Glass Card */
+[data-theme="midnight"] .glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+}
+
+/* Neon Border */
+[data-theme="midnight"] .neon-border {
+    position: relative;
+}
+
+[data-theme="midnight"] .neon-border::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+[data-theme="midnight"] .neon-border:hover::after {
+    opacity: 1;
+}
+
+/* Cyber Badge */
+[data-theme="midnight"] .cyber-badge {
+    background: transparent;
+    border: 1px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Stats Glow */
+[data-theme="midnight"] .stat-value {
+    color: white;
+    text-shadow: 0 0 20px var(--neon-cyan);
+}
+
+/* Section Badge */
+[data-theme="midnight"] .section-badge {
+    background: rgba(0, 245, 255, 0.1);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+/* ============================================
+   FORM ELEMENTS - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] input,
+[data-theme="midnight"] textarea,
+[data-theme="midnight"] select {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    color: white;
+}
+
+[data-theme="midnight"] input:focus,
+[data-theme="midnight"] textarea:focus,
+[data-theme="midnight"] select:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+    outline: none;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR - MIDNIGHT
+   ============================================ */
+[data-theme="midnight"] ::-webkit-scrollbar {
+    width: 8px;
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-thumb {
+    background: var(--primary-600);
+    border-radius: 4px;
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-500);
+}
