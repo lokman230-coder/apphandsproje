@@ -1,0 +1,27 @@
+RewriteEngine On
+RewriteBase /
+
+# Güvenlik
+RewriteRule ^\.env$ - [F,L]
+RewriteRule ^config\.php$ - [F,L]
+
+# Tüm istekleri index.php'ye yönlendir
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Statik dosyaları doğrudan servis et
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# PHP ayarları
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 128M
+    php_value post_max_size 128M
+    php_value max_execution_time 300
+</IfModule>
