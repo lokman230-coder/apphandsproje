@@ -1,0 +1,343 @@
+/**
+ * Ahost One - Midnight Theme Tokens
+ * Karanlık Cyberpunk - Mor/Lila Neon
+ * Benzersiz: Grid arka plan, neon glow, cyber estetik
+ */
+
+[data-theme="midnight"] {
+    /* Primary - Neon Mor */
+    --primary-50: #faf5ff;
+    --primary-100: #f3e8ff;
+    --primary-200: #e9d5ff;
+    --primary-300: #d8b4fe;
+    --primary-400: #c084fc;
+    --primary-500: #a855f7;
+    --primary-600: #9333ea;
+    --primary-700: #7e22ce;
+    --primary-800: #6b21a8;
+    --primary-900: #581c87;
+    
+    /* Gradient */
+    --gradient-primary: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #a855f7 100%);
+    
+    /* Neon Renkler */
+    --neon-cyan: #00f5ff;
+    --neon-pink: #ff00ff;
+    --neon-green: #39ff14;
+    --neon-yellow: #ffff00;
+    
+    /* Backgrounds */
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-tertiary: #1a1a25;
+    --bg-card: rgba(18, 18, 26, 0.85);
+    --bg-hover: rgba(147, 51, 234, 0.1);
+    
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-muted: #6b6b7b;
+    
+    /* Borders */
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-strong: rgba(255, 255, 255, 0.12);
+    --border-hover: rgba(147, 51, 234, 0.5);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 50px 100px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 60px rgba(147, 51, 234, 0.4);
+    --shadow-neon: 0 0 30px rgba(0, 245, 255, 0.3);
+    
+    /* Header */
+    --header-height: 72px;
+    
+    /* Grid Pattern */
+    --grid-bg: 
+        radial-gradient(ellipse at top, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    --grid-size: 60px;
+}
+
+/* Midnight Body */
+[data-theme="midnight"] body {
+    background: var(--bg-primary);
+    background-image: var(--grid-bg);
+    background-size: 100% 100%, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+    color: var(--text-primary);
+}
+
+/* Midnight Scrollbar */
+[data-theme="midnight"] ::-webkit-scrollbar {
+    width: 8px;
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-thumb {
+    background: var(--primary-600);
+    border-radius: 4px;
+}
+
+[data-theme="midnight"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-500);
+}
+
+/* ============================================
+   MIDNIGHT - LOGO
+   ============================================ */
+[data-theme="midnight"] .logo-icon {
+    background: linear-gradient(135deg, var(--primary-600), var(--neon-pink));
+    box-shadow: 0 0 30px rgba(147, 51, 234, 0.6);
+    animation: midnight-glow 3s ease-in-out infinite;
+}
+
+[data-theme="midnight"] .logo-text {
+    color: white;
+    text-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+
+@keyframes midnight-glow {
+    0%, 100% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6); }
+    50% { box-shadow: 0 0 50px rgba(147, 51, 234, 0.9), 0 0 80px rgba(255, 0, 255, 0.3); }
+}
+
+/* ============================================
+   MIDNIGHT - NAVIGATION
+   ============================================ */
+[data-theme="midnight"] .site-header {
+    background: rgba(10, 10, 15, 0.9);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .nav-links a {
+    color: var(--text-secondary);
+}
+
+[data-theme="midnight"] .nav-links a:hover,
+[data-theme="midnight"] .nav-links a.active {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 15px var(--neon-cyan);
+}
+
+[data-theme="midnight"] .nav-links a::after {
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+}
+
+/* ============================================
+   MIDNIGHT - BUTTONS
+   ============================================ */
+[data-theme="midnight"] .btn-primary {
+    background: linear-gradient(135deg, var(--primary-600), var(--neon-pink));
+    box-shadow: 0 4px 20px rgba(147, 51, 234, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="midnight"] .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.6s;
+}
+
+[data-theme="midnight"] .btn-primary:hover::before {
+    left: 100%;
+}
+
+[data-theme="midnight"] .btn-primary:hover {
+    box-shadow: 0 8px 40px rgba(147, 51, 234, 0.7);
+    transform: translateY(-3px);
+}
+
+[data-theme="midnight"] .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid var(--primary-500);
+}
+
+[data-theme="midnight"] .btn-secondary:hover {
+    background: rgba(147, 51, 234, 0.15);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+}
+
+[data-theme="midnight"] .btn-ghost {
+    color: var(--text-secondary);
+}
+
+[data-theme="midnight"] .btn-ghost:hover {
+    background: rgba(147, 51, 234, 0.1);
+    color: var(--neon-cyan);
+}
+
+/* ============================================
+   MIDNIGHT - HERO
+   ============================================ */
+[data-theme="midnight"] .hero {
+    background: transparent;
+}
+
+[data-theme="midnight"] .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+[data-theme="midnight"] .hero-title {
+    background: linear-gradient(135deg, white 0%, var(--neon-cyan) 50%, var(--primary-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+[data-theme="midnight"] .hero-badge {
+    background: rgba(0, 245, 255, 0.1);
+    color: var(--neon-cyan);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .hero-float {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--primary-600);
+    box-shadow: 0 0 40px rgba(147, 51, 234, 0.3);
+}
+
+[data-theme="midnight"] .hero-image {
+    border: 2px solid var(--primary-600);
+    box-shadow: 0 0 80px rgba(147, 51, 234, 0.4);
+}
+
+/* ============================================
+   MIDNIGHT - FEATURES
+   ============================================ */
+[data-theme="midnight"] .feature-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .feature-card::before {
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--primary-500));
+}
+
+[data-theme="midnight"] .feature-card:hover {
+    border-color: var(--primary-600);
+    box-shadow: 0 0 50px rgba(147, 51, 234, 0.3);
+}
+
+[data-theme="midnight"] .feature-icon {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(255, 0, 255, 0.2));
+    color: var(--neon-cyan);
+    box-shadow: 0 0 30px rgba(0, 245, 255, 0.2);
+}
+
+/* ============================================
+   MIDNIGHT - PRICING
+   ============================================ */
+[data-theme="midnight"] .pricing-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .pricing-card.popular {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 50px rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .pricing-badge {
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+}
+
+[data-theme="midnight"] .pricing-features li i {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+/* ============================================
+   MIDNIGHT - FOOTER
+   ============================================ */
+[data-theme="midnight"] .site-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .footer-social a {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+}
+
+[data-theme="midnight"] .footer-social a:hover {
+    background: var(--primary-600);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+[data-theme="midnight"] .footer-links a:hover {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* ============================================
+   MIDNIGHT - DOMAIN CHECKER
+   ============================================ */
+[data-theme="midnight"] .domain-checker {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--primary-600);
+}
+
+[data-theme="midnight"] .domain-form input {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--primary-600);
+    color: white;
+}
+
+[data-theme="midnight"] .domain-form input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+}
+
+[data-theme="midnight"] .domain-result.available {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+}
+
+[data-theme="midnight"] .domain-result.available .domain-price {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+/* ============================================
+   MIDNIGHT - CTA
+   ============================================ */
+[data-theme="midnight"] .cta {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(18, 18, 26, 0.9));
+    border: 1px solid var(--primary-600);
+    position: relative;
+}
+
+[data-theme="midnight"] .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0, 245, 255, 0.1) 0%, transparent 60%);
+}
